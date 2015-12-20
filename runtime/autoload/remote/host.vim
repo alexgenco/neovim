@@ -133,12 +133,13 @@ function! s:RegistrationCommands(host)
     return []
   endif
 
-  for path in paths
+  let abs_paths = map(paths, 'resolve(v:val)')
+  for path in abs_paths
     call remote#host#RegisterPlugin(host_id, path, [])
   endfor
   let channel = remote#host#Require(host_id)
   let lines = []
-  for path in paths
+  for path in abs_paths
     let specs = rpcrequest(channel, 'specs', path)
     if type(specs) != type([])
       " host didn't return a spec list, indicates a failure while loading a
@@ -153,7 +154,7 @@ function! s:RegistrationCommands(host)
     call add(lines, "     \\ ])")
   endfor
   echomsg printf("remote/host: %s host registered plugins %s",
-        \ a:host, string(map(copy(paths), "fnamemodify(v:val, ':t')")))
+        \ a:host, string(map(copy(abs_paths), "fnamemodify(v:val, ':t')")))
 
   " Delete the temporary host clone
   call rpcstop(s:hosts[host_id].channel)
