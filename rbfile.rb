@@ -1,0 +1,1 @@
+vim.command("let set_by_rubyfile = 123")
