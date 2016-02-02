@@ -1,11 +1,16 @@
 require 'neovim'
-require 'byebug'
+
+$stderr.puts "Started Ruby Script Host"
 
 class Neovim::Current
   attr_accessor :range
 end
 
 Neovim.plugin do |plug|
+  plug.command(:Test, nargs: 0, sync: true) do
+    'msg recieved'
+  end
+
   plug.command(:ruby_test, nargs: 0, sync: true) do
     'msg recieved'
   end

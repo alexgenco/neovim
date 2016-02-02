@@ -18,10 +18,10 @@ describe('ruby commands and functions', function()
     eq(1, eval('has("ruby")'))
   end)
 
-  -- it('ruby execute', function()
-  --   command('ruby nvim.set_var("set_by_ruby", [100, 0])')
-  --   eq({100,0}, eval('g:set_by_ruby'))
-  -- end)
+  it('ruby execute', function()
+    command('ruby nvim.set_var("set_by_ruby", [100, 0])')
+    eq({100,0}, eval('g:set_by_ruby'))
+  end)
 
   -- it('ruby execute with nested commands', function()
   --   -- i might just have to pend this one.
